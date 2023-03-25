@@ -37,7 +37,7 @@ namespace HR.LeaveManagement.Application.Features.LeaveRequest.Commands.UpdateLe
             if (validatorResult.Errors.Any())
             {
                 _logger.LogWarning($"{nameof(UpdateLeaveRequestCommandRequest)} is Invalid");
-                throw new BadRequestException("Invalid Leave Allocation", validatorResult);
+                throw new BadRequestException("Invalid Leave Request", validatorResult);
             }
             var leaveRequest = await _leaveRequestRepository.GetByIdAsync(request.Id);
 
