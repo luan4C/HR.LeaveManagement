@@ -32,7 +32,7 @@ namespace HR.LeaveManagement.Application.Features.LeaveType.Commands.CreateLeave
             if (validationResult.Errors.Any())
             {
                 _logger.LogWarning("Validation errors on creating {0} - {1}", nameof(LeaveType), request.Name);
-                throw new BadRequestException($"{nameof(LeaveType)} is Invalid", validationResult);
+                throw new BadRequestException($"{nameof(LeaveType)} is Invalid: {validationResult.Errors[0].ErrorMessage}", validationResult);
             }
             var leaveTypeToCreate = _mapper.Map<Domain.LeaveType>(request);
 
