@@ -27,14 +27,22 @@ namespace HR.LeaveManagement.BlazorUI.Services
             }catch (ApiException ex)
             {
                 return ConvertApiExceptions<Guid>(ex);
-            }
-
-            
+            }   
         }
 
-        public Task<Response<Guid>> DeleteLeaveType(int id)
+        public async Task<Response<Guid>> DeleteLeaveType(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                await _client.LeaveTypesDELETEAsync(id);
+                return new Response<Guid>()
+                {
+                    Success = true
+                };
+            }catch (ApiException ex)
+            {
+                return ConvertApiExceptions<Guid>(ex);
+            }
         }
 
         public Task<LeaveTypeVM> GetLeaveTypeDetails(int id)
@@ -50,9 +58,22 @@ namespace HR.LeaveManagement.BlazorUI.Services
 
         }
 
-        public Task<Response<Guid>> UpdateLeaveType(int id, LeaveTypeVM leaveType)
+        public async Task<Response<Guid>> UpdateLeaveType(int id, LeaveTypeVM leaveType)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var createLeaveTypeCommand = _mapper.Map<UpdateLeaveTypeCommandRequest>(leaveType);
+
+                await _client.LeaveTypesPUTAsync(id.ToString(),createLeaveTypeCommand);
+                return new Response<Guid>()
+                {
+                    Success = true,
+                };
+            }
+            catch (ApiException ex)
+            {
+                return ConvertApiExceptions<Guid>(ex);
+            }
         }
     }
 }
