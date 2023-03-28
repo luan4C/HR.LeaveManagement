@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace HR.LeaveManagement.Application.Contracts.Identity
 {
-    public interface IUserServices
+    public interface IUserService
     {
         Task<List<Employee>> GetEmployees();
 

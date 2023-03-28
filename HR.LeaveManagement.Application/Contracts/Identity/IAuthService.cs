@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace HR.LeaveManagement.Application.Contracts.Identity
 {
-    internal interface IAuthService
+    public interface IAuthService
     {
         Task<AuthResponse> Login(AuthRequest request);
 
