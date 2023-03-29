@@ -45,7 +45,7 @@ namespace HR.LeaveManagement.Identity.Services
 
             JwtSecurityToken jwtSecurityToken = await GenerateToken(user);
 
-            var response = new AuthResponse()
+            var response = new AuthResponse
             {
                 Id = user.Id,
                 Email = user.Email,

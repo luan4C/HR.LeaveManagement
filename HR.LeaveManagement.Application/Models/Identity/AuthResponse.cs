@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace HR.LeaveManagement.Application.Models.Identity
 {
-    public record AuthResponse
+    public class AuthResponse
     {
-        public string Id;
-        public string UserName;
-        public string Email;
-        public string Token;
+        public string Id { get; set; }
+        public string UserName { get; set; }
+        public string Email { get; set; }
+        public string Token { get; set; }
     }
 }
