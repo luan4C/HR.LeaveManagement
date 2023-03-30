@@ -1,0 +1,12 @@
+﻿@page "/logout"
+@using HR.LeaveManagement.BlazorUI.Contracts
+@inject IAuthenticationService authService
+@inject NavigationManager navManager
+
+@code {
+    protected override async void OnInitialized()
+    {
+        await authService.Logout();
+        navManager.NavigateTo("/");
+    }
+}
