@@ -10,21 +10,21 @@ namespace HR.LeaveManagement.Application.Models.Identity
     public record RegistrationRequest
     {
         [Required]
-        public string FirstName;
+        public string FirstName { get; set; }
 
         [Required]
-        public string LastName;
+        public string LastName { get; set; }
 
         [Required]
         [EmailAddress]
-        public string Email;
+        public string Email { get; set; }
 
         [Required]
         [MinLength(6)]
-        public string Username;
+        public string Username { get; set; }
 
         [Required]
         [MinLength(6)]
-        public string Password;
+        public string Password { get; set; }
     }
 }
