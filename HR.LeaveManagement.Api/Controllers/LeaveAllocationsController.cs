@@ -24,7 +24,7 @@ namespace HR.LeaveManagement.Api.Controllers
 
         // GET: api/<LeaveAllocations>
         [HttpGet]
-        public async Task<ActionResult<List<LeaveAllocation>>> Get()
+        public async Task<ActionResult<List<LeaveAllocation>>> Get(bool isLoggedInUser = false)
         {
             var leaveAllocations = await _mediator.Send(new GetLeaveAllocationListQueryRequest());
             return Ok(leaveAllocations);
