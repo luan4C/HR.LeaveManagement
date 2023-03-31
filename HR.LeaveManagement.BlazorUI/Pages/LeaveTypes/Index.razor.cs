@@ -21,20 +21,24 @@ namespace HR.LeaveManagement.BlazorUI.Pages.LeaveTypes
     public partial class Index
     {
         [Inject]
-        public NavigationManager NavigationManager { get; set; }
+        protected NavigationManager NavigationManager { get; set; }
 
         [Inject]
-        public ILeaveTypeService LeaveTypeService { get; set; }
+        protected ILeaveTypeService LeaveTypeService { get; set; }
+        
+        [Inject]
+        protected ILeaveAllocationService LeaveAllocationService { get; set; }
+
         List<LeaveTypeVM> LeaveTypes { get; set; }
-        public string Message { get; set; } = string.Empty;
+        protected string Message { get; set; } = string.Empty;
 
         protected void CreateLeaveType()
         {
             NavigationManager.NavigateTo("/leavetypes/create");
         }
-        protected void AllocateLeaveType(int id)
+        protected async Task AllocateLeaveType(int id)
         {
-            
+            var response = await LeaveAllocationService.CreateLeaveAllocations(id);
         }
         protected void EditLeaveType(int id)
         {
