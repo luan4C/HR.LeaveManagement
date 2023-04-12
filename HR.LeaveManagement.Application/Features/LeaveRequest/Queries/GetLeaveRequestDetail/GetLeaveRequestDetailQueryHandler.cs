@@ -24,6 +24,7 @@ namespace HR.LeaveManagement.Application.Features.LeaveRequest.Queries.GetLeaveR
         {
             var leaveRequest = _mapper.Map<LeaveRequestDetailDTO>((await _leaveRequestRepository.GetLeaveRequestWithDetails(request.Id)));
 
+
             return leaveRequest;
         }
     }

@@ -40,12 +40,12 @@ namespace HR.LeaveManagement.BlazorUI.Services.Base
 
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Collections.Generic.ICollection<LeaveAllocation>> LeaveAllocationsAllAsync(bool? isLoggedInUser);
+        System.Threading.Tasks.Task<System.Collections.Generic.ICollection<LeaveAllocationDTO>> LeaveAllocationsAllAsync(bool? isLoggedInUser);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Collections.Generic.ICollection<LeaveAllocation>> LeaveAllocationsAllAsync(bool? isLoggedInUser, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<System.Collections.Generic.ICollection<LeaveAllocationDTO>> LeaveAllocationsAllAsync(bool? isLoggedInUser, System.Threading.CancellationToken cancellationToken);
 
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
@@ -58,12 +58,12 @@ namespace HR.LeaveManagement.BlazorUI.Services.Base
 
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<LeaveAllocation> LeaveAllocationsGETAsync(int id);
+        System.Threading.Tasks.Task<LeaveAllocationDTO> LeaveAllocationsGETAsync(int id);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<LeaveAllocation> LeaveAllocationsGETAsync(int id, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<LeaveAllocationDTO> LeaveAllocationsGETAsync(int id, System.Threading.CancellationToken cancellationToken);
 
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
@@ -378,7 +378,7 @@ namespace HR.LeaveManagement.BlazorUI.Services.Base
 
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<System.Collections.Generic.ICollection<LeaveAllocation>> LeaveAllocationsAllAsync(bool? isLoggedInUser)
+        public virtual System.Threading.Tasks.Task<System.Collections.Generic.ICollection<LeaveAllocationDTO>> LeaveAllocationsAllAsync(bool? isLoggedInUser)
         {
             return LeaveAllocationsAllAsync(isLoggedInUser, System.Threading.CancellationToken.None);
         }
@@ -386,7 +386,7 @@ namespace HR.LeaveManagement.BlazorUI.Services.Base
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<LeaveAllocation>> LeaveAllocationsAllAsync(bool? isLoggedInUser, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<LeaveAllocationDTO>> LeaveAllocationsAllAsync(bool? isLoggedInUser, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append("api/LeaveAllocations?");
@@ -428,7 +428,7 @@ namespace HR.LeaveManagement.BlazorUI.Services.Base
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<System.Collections.Generic.ICollection<LeaveAllocation>>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<System.Collections.Generic.ICollection<LeaveAllocationDTO>>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -539,7 +539,7 @@ namespace HR.LeaveManagement.BlazorUI.Services.Base
 
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<LeaveAllocation> LeaveAllocationsGETAsync(int id)
+        public virtual System.Threading.Tasks.Task<LeaveAllocationDTO> LeaveAllocationsGETAsync(int id)
         {
             return LeaveAllocationsGETAsync(id, System.Threading.CancellationToken.None);
         }
@@ -547,7 +547,7 @@ namespace HR.LeaveManagement.BlazorUI.Services.Base
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<LeaveAllocation> LeaveAllocationsGETAsync(int id, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<LeaveAllocationDTO> LeaveAllocationsGETAsync(int id, System.Threading.CancellationToken cancellationToken)
         {
             if (id == null)
                 throw new System.ArgumentNullException("id");
@@ -588,7 +588,7 @@ namespace HR.LeaveManagement.BlazorUI.Services.Base
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<LeaveAllocation>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<LeaveAllocationDTO>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -2025,23 +2025,39 @@ namespace HR.LeaveManagement.BlazorUI.Services.Base
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.18.2.0 (NJsonSchema v10.8.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class LeaveAllocation
+    public partial class Employee
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+
+        [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingDefault)]   
+        public string Id { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("email")]
+
+        [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingDefault)]   
+        public string Email { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("firstName")]
+
+        [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingDefault)]   
+        public string FirstName { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("lastName")]
+
+        [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingDefault)]   
+        public string LastName { get; set; }
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.18.2.0 (NJsonSchema v10.8.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class LeaveAllocationDTO
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
 
         [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingDefault)]   
         public int Id { get; set; }
-
-        [System.Text.Json.Serialization.JsonPropertyName("dateCreated")]
-
-        [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingDefault)]   
-        public System.DateTimeOffset? DateCreated { get; set; }
-
-        [System.Text.Json.Serialization.JsonPropertyName("dateModified")]
-
-        [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingDefault)]   
-        public System.DateTimeOffset? DateModified { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("numberOfDays")]
 
@@ -2051,7 +2067,7 @@ namespace HR.LeaveManagement.BlazorUI.Services.Base
         [System.Text.Json.Serialization.JsonPropertyName("leaveType")]
 
         [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingDefault)]   
-        public LeaveType LeaveType { get; set; }
+        public LeaveTypeDTO LeaveType { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("leaveTypeId")]
 
@@ -2063,16 +2079,21 @@ namespace HR.LeaveManagement.BlazorUI.Services.Base
         [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingDefault)]   
         public int Period { get; set; }
 
-        [System.Text.Json.Serialization.JsonPropertyName("employeeId")]
-
-        [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingDefault)]   
-        public string EmployeeId { get; set; }
-
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.18.2.0 (NJsonSchema v10.8.0.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class LeaveRequestDetailDTO
     {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+
+        [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingDefault)]   
+        public int Id { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("employee")]
+
+        [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingDefault)]   
+        public Employee Employee { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("requestingEmployeeId")]
 
@@ -2130,6 +2151,16 @@ namespace HR.LeaveManagement.BlazorUI.Services.Base
     public partial class LeaveRequestListDTO
     {
 
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+
+        [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingDefault)]   
+        public int Id { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("employee")]
+
+        [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingDefault)]   
+        public Employee Employee { get; set; }
+
         [System.Text.Json.Serialization.JsonPropertyName("requestingEmployeeId")]
 
         [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingDefault)]   
@@ -2160,36 +2191,10 @@ namespace HR.LeaveManagement.BlazorUI.Services.Base
         [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingDefault)]   
         public bool? Approved { get; set; }
 
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.18.2.0 (NJsonSchema v10.8.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class LeaveType
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        [System.Text.Json.Serialization.JsonPropertyName("cancelled")]
 
         [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingDefault)]   
-        public int Id { get; set; }
-
-        [System.Text.Json.Serialization.JsonPropertyName("dateCreated")]
-
-        [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingDefault)]   
-        public System.DateTimeOffset? DateCreated { get; set; }
-
-        [System.Text.Json.Serialization.JsonPropertyName("dateModified")]
-
-        [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingDefault)]   
-        public System.DateTimeOffset? DateModified { get; set; }
-
-        [System.Text.Json.Serialization.JsonPropertyName("name")]
-
-        [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingDefault)]   
-        public string Name { get; set; }
-
-        [System.Text.Json.Serialization.JsonPropertyName("defaultDays")]
-
-        [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingDefault)]   
-        public int DefaultDays { get; set; }
+        public bool? Cancelled { get; set; }
 
     }
 

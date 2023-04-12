@@ -16,11 +16,13 @@ namespace HR.LeaveManagement.Application.Features.LeaveRequest.Commands.CancelLe
         private readonly ILeaveRequestRepository _leaveRequestRepository;
         private readonly IMapper _mapper;
         private readonly IAppLogger<CancelLeaveRequestCommandHandler> _logger;
-        public CancelLeaveRequestCommandHandler(ILeaveRequestRepository leaveRequestRepository, IMapper mapper, IAppLogger<CancelLeaveRequestCommandHandler> logger)
+        private readonly ILeaveAllocationRepository _leaveAllocationRepository;
+        public CancelLeaveRequestCommandHandler(ILeaveRequestRepository leaveRequestRepository, IMapper mapper, IAppLogger<CancelLeaveRequestCommandHandler> logger, ILeaveAllocationRepository leaveAllocationRepository)
         {
             _leaveRequestRepository = leaveRequestRepository;
             _mapper = mapper;
             _logger = logger;
+            _leaveAllocationRepository = leaveAllocationRepository;
         }
 
         public async Task<Unit> Handle(CancelLeaveRequestCommandRequest request, CancellationToken cancellationToken)
@@ -34,6 +36,18 @@ namespace HR.LeaveManagement.Application.Features.LeaveRequest.Commands.CancelLe
             }
 
             leaveRequest.Cancelled = true;
+
+            await _leaveRequestRepository.UpdateAsync(leaveRequest);
+
+            // if already approved, re-evaluate the employee's allocations for the leave type
+            if (leaveRequest.Approved == true)
+            {
+                int daysRequested = (int)(leaveRequest.EndDate - leaveRequest.StartDate).TotalDays;
+                var allocation = await _leaveAllocationRepository.GetUserAllocation(leaveRequest.RequestingEmployeeId, leaveRequest.LeaveTypeId);
+                allocation.NumberOfDays += daysRequested;
+
+                await _leaveAllocationRepository.UpdateAsync(allocation);
+            }
 
             return Unit.Value;
         }

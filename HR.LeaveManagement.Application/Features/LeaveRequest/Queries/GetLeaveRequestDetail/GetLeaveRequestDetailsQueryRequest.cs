@@ -9,7 +9,8 @@ namespace HR.LeaveManagement.Application.Features.LeaveRequest.Queries.GetLeaveR
 {
 
     public class GetLeaveRequestDetailsQueryRequest: IRequest<LeaveRequestDetailDTO>
-    {
+    {   
+        public bool IsLoggedInUser { get; set; }
         public int Id { get; set; }
     }
 }

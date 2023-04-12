@@ -14,10 +14,12 @@ namespace HR.LeaveManagement.Application.Features.LeaveRequest.Commands.ChangeLe
     {
         private readonly ILeaveRequestRepository _leaveRequestRepository;
         private readonly IAppLogger<ChangeLeaveRequestApprovalCommandHandler> _logger;
-        public ChangeLeaveRequestApprovalCommandHandler(ILeaveRequestRepository leaveRequestRepository, IAppLogger<ChangeLeaveRequestApprovalCommandHandler> logger)
+        private readonly ILeaveAllocationRepository _leaveAllocationRepository;
+        public ChangeLeaveRequestApprovalCommandHandler(ILeaveRequestRepository leaveRequestRepository, IAppLogger<ChangeLeaveRequestApprovalCommandHandler> logger, ILeaveAllocationRepository leaveAllocationRepository)
         {
             _leaveRequestRepository = leaveRequestRepository;
             _logger = logger;
+            _leaveAllocationRepository = leaveAllocationRepository;
         }
 
         public async Task<Unit> Handle(ChangeLeaveRequestApprovalCommandRequest request, CancellationToken cancellationToken)
@@ -28,6 +30,15 @@ namespace HR.LeaveManagement.Application.Features.LeaveRequest.Commands.ChangeLe
             {
                 _logger.LogWarning("{0} does not exist with Id: {1}", nameof(Domain.LeaveRequest), request.Id);
                 throw new NotFoundException(nameof(Domain.LeaveRequest), request.Id);
+            }
+
+            if (request.Approved)
+            {
+                int daysRequested = (int)(leaveRequest.EndDate - leaveRequest.StartDate).TotalDays;
+                var allocation = await _leaveAllocationRepository.GetUserAllocation(leaveRequest.RequestingEmployeeId, leaveRequest.LeaveTypeId);
+                allocation.NumberOfDays -= daysRequested;
+
+                await _leaveAllocationRepository.UpdateAsync(allocation);
             }
 
             leaveRequest.Approved = request.Approved;

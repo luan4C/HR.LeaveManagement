@@ -19,9 +19,9 @@ namespace HR.LeaveManagement.BlazorUI.Models.LeaveRequest
 
         public bool Cancelled { get; set; }
 
-        public LeaveTypeVM LeaveType { get; set; }
+        public LeaveTypeVM LeaveType { get; set; } = new LeaveTypeVM();
 
-        public EmployeeVM EmployeeVM { get; set; }
+        public EmployeeVM EmployeeVM { get; set; } = new EmployeeVM();
 
         [Display(Name = "Start Date")]
         [Required]

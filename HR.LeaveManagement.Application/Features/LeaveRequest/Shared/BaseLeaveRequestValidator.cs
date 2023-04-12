@@ -16,7 +16,7 @@ namespace HR.LeaveManagement.Application.Features.LeaveRequest.Shared
             _leaveTypeRepository = leaveTypeRepository;
             RuleFor(src=>src.EndDate).GreaterThan(src=>src.StartDate)
                 .WithMessage("{PropertyName} must be after {ComparisonValue}");
-            RuleFor(src => src.StartDate).GreaterThan(src => src.EndDate)
+            RuleFor(src => src.StartDate).LessThan(src => src.EndDate)
                 .WithMessage("{PropertyName} must be before {ComparisonValue}");
 
             RuleFor(src => src.LeaveTypeId).GreaterThan(0)
